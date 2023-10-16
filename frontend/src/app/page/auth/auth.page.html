@@ -1,0 +1,10 @@
+<ion-content>
+  <div *ngIf="status">
+    <app-login></app-login> <!-- Componente de inicio de sesión -->
+    <p class="countStatus" (click)="switchToRegister()">No tengo una cuenta</p>
+  </div>
+  <div *ngIf="!status">
+    <app-register></app-register> <!-- Componente de registro -->
+  <p class="countStatus" (click)="switchToLogin()">Ya tengo una cuenta</p>
+  </div>
+</ion-content>
