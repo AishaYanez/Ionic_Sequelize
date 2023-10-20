@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     nick_name: {
       type: Sequelize.STRING
     },
-    code_user: {
+    user_code: {
       type: Sequelize.STRING
     },
     email: {
@@ -11,11 +11,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     password: {
       type: Sequelize.STRING
+    },
+    filename: {
+      type: Sequelize.STRING
     }
-    // ,
-    // filename: {
-    //   type: Sequelize.STRING
-    // }
   });
 
   return User;

@@ -1,10 +1,10 @@
 module.exports = app => {
   const users = require("../controllers/user.controller.js");
-  // var upload = require('../multer/upload');
+  var upload = require('../multer/upload');
 
   var router = require("express").Router();
 
-  router.post("/", users.create);
+  router.post("/", upload.single('file'), users.create);
 
   router.get("/", users.findAll);
 

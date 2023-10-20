@@ -11,36 +11,31 @@ exports.create = (req, res) => {
   }
 
   const user = {
-    nick_name: req.body.code_user,
-    email: req.body.code_user,
+    nick_name: req.body.nick_name,
+    email: req.body.email,
     password: req.body.password,
-    code_user: req.body.code_user
-    // ,
-    // filename: req.file ? req.file.filename : ""
+    user_code: req.body.user_code,
+    filename: req.file ? req.file.filename : ""
   };
 
-  User.create(user)
-    .then(data => {
-      res.send(data);
+  User.create(user).then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the user."
     })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the user."
-      });
-    });
+  });
 };
 
 exports.findAll = (req, res) => {
-  User.findAll()
-    .then(data => {
-      res.send(data);
+  User.findAll().then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving user."
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving user."
-      });
-    });
+  });
 };
 
 exports.findOne = (req, res) => { };
