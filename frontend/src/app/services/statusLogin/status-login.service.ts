@@ -11,6 +11,8 @@ export class StatusLoginService {
 
   constructor(private userService: UserService, private router: Router) { }
 
+  userLogin!:User;
+
   public statusLogin = new BehaviorSubject<boolean>(false);
   atributoBooleano$: Observable<boolean> = this.statusLogin.asObservable();
 
@@ -20,6 +22,7 @@ export class StatusLoginService {
       this.statusLogin.next(JSON.parse(localStorage.getItem('loggedIn') ?? 'false'));
     } else {
       localStorage.setItem('loggedIn', 'false');
+      this.statusLogin.next(JSON.parse(localStorage.getItem('loggedIn') ?? 'false'));
     }
   }
 
@@ -37,21 +40,21 @@ export class StatusLoginService {
     localStorage.setItem('email', email);
     this.changeStatusLogin();
     this.router.navigate(['change-password']);
-    // this.userService.getUser(email).subscribe((u: User) => {
-    //   if (u.password === password) {
-    //     localStorage.setItem('loggedIn', 'true');
-    //     this.userLogin = {
-    //       id: u.id,
-    //       codeUser: u.codeUser,
-    //       nickName: u.nickName,
-    //       email: u.email,
-    //       password: u.password
-    //     };
-    //     localStorage.setItem('emailUser',this.userLogin.email);
-    //     this.userService.setUserLogin(this.userLogin);
-    //     this.changeStatusLogin();
-    //     this.router.navigate(['/']);
-    //   }
-    // });
+    this.userService.getUser(email).subscribe((u: User) => {
+      if (u.password === password) {
+        localStorage.setItem('loggedIn', 'true');
+        this.userLogin = {
+          id: u.id,
+          codeUser: u.codeUser,
+          nickName: u.nickName,
+          email: u.email,
+          password: u.password
+        };
+        localStorage.setItem('emailUser',this.userLogin.email);
+        // this.userService.setUserLogin(this.userLogin);
+        this.changeStatusLogin();
+        this.router.navigate(['/']);
+      }
+    });
   }
 }

@@ -7,19 +7,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <form [formGroup]="singupForm" (ngSubmit)="register()" novalidate>
     <ion-item>
-      <ion-label id="nickName" position="floating">Nombre</ion-label>
-      <ion-input aria-labelledby="nickName" [(ngModel)]="nickName"></ion-input>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="nickName" type="text"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl['nickName']?.errors?.['required']">NickName is required.</span>
     <ion-item>
       <ion-label id="emailRegister" position="floating">Correo Electrónico</ion-label>
-      <ion-input aria-labelledby="emailRegister" type="email" [(ngModel)]="email"></ion-input>
+      <ion-input formControlName="email" aria-labelledby="emailRegister" type="email"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl['email']?.errors?.['required']">Email is required.</span>
     <ion-item>
       <ion-label id="passwordRegister" position="floating">Contraseña</ion-label>
-      <ion-input aria-labelledby="passwordRegister" type="password" [(ngModel)]="password"></ion-input>
+      <ion-input formControlName="password" aria-labelledby="passwordRegister" type="password"></ion-input>
     </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="register()">Registrarse</ion-button>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl['password']?.errors?.['required']">Password is required.</span>
+    <ion-button type="Submit" expand="full">Registrarse</ion-button>
+  </form>
 </ion-content>

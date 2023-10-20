@@ -27,6 +27,25 @@ exports.create = (req, res) => {
   });
 };
 
+exports.findOne = (req, res) => {
+  const userEmail = req.params.email;
+  User.findOne({ where: { email: userEmail } })
+    .then(user => {
+      if (user) {
+        res.send(user);
+      } else {
+        res.status(404).send({
+          message: "User not found"
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving user by email: " + err.message
+      });
+    });
+};
+
 exports.findAll = (req, res) => {
   User.findAll().then(data => {
     res.send(data);

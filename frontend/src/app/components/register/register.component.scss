@@ -2,3 +2,14 @@ ion-content {
     height: auto;
     height: 288px;
 }
+
+.photo-frame {
+    margin: 5vw;
+    border: black solid 1px;
+    width: 40vw;
+    border-radius: .25em;
+}
+
+.error {
+    color: red;
+}

@@ -16,25 +16,28 @@ const httpOptionsUsingUrlEncoded = {
   providedIn: 'root'
 })
 export class UserService {
-  endPoint: string = 'http://localhost:8080/users';
+  endPoint: string = 'http://localhost:8080/api/users';
 
   constructor(private httpClient: HttpClient) { }
 
+  getUsers(){
+    return this.httpClient.get(this.endPoint);
+  }
+
   getUser(email: String): Observable<User> {
-    let url = `${this.endPoint}?email=${email}`;
+    let url = `${this.endPoint}/${email}`;
     return this.httpClient.get<User>(url);
   }
 
-  postUser(user: User): Observable<User> {
-    let bodyEncode = new URLSearchParams();
-    bodyEncode.append("nickName", user.nickName);
-    bodyEncode.append("codeUser", user.codeUser);
-    bodyEncode.append("email", user.email);
-    bodyEncode.append("password", user.password);
-
-    const body = bodyEncode.toString();
-    console.log(body);
-    return this.httpClient.post<User>(this.endPoint, body, httpOptionsUsingUrlEncoded);
+  postUser(user: any, blob:any) {
+    let formData = new FormData();
+    formData.append("nick_name", user.nickName);
+    formData.append("user_code", user.nickName + '12345');
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("file", blob);
+    formData.forEach(u => console.log(u));    
+    return this.httpClient.post(this.endPoint, formData);
   }
 
   deleteUser(id:number): Observable<User> {
@@ -43,10 +46,9 @@ export class UserService {
   }
 
   updateUser(password: string, user:User): Observable<User> {
-    
     let bodyEncoded = new URLSearchParams();
     bodyEncoded.append("nickName", user.nickName);
-    bodyEncoded.append("codeUser", user.codeUser);
+    bodyEncoded.append("codeUser", user.nickName + '12345');
     bodyEncoded.append("email", user.email);
     bodyEncoded.append("password", password);
     let body = bodyEncoded.toString();
