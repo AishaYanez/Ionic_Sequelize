@@ -7,15 +7,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
     <ion-item>
       <ion-label id="emailLogin" position="floating">Correo Electrónico</ion-label>
-      <ion-input placeholder="aisha1@hola.es" aria-labelledby="emailLogin" [(ngModel)]="email"></ion-input>
+      <ion-input formControlName="email" aria-labelledby="emailLogin" type="email"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl['email']?.errors?.['required']">Email is required.</span>
     <ion-item>
-      <ion-label id="passwordLogin" position="floating">Contraseña</ion-label>
-      <ion-input aria-labelledby="passwordLogin" type="password" [(ngModel)]="password"></ion-input>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" aria-labelledby="passwordLogin" type="password"></ion-input>
     </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl['password']?.errors?.['required']">Password is required.</span>
+    <ion-button type="Submit" expand="full">Iniciar Sesión</ion-button>
+  </form>
 </ion-content>

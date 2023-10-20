@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
   capturedPhoto: string = "";
   
   constructor(public formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router:Router
   ) { }
 
 
@@ -26,6 +28,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clearForm();
+  }
+
+  clearForm(){
     this.singupForm = this.formBuilder.group({
       nickName: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -57,7 +63,6 @@ export class RegisterComponent implements OnInit {
   }
 
   async register() {
-    console.log('sdfdsfdsfhkdsjhkfhdskfbds')
     this.isSubmitted = true;
     if (!this.singupForm.valid) {
       console.log('Please provide all the required values!')
@@ -70,11 +75,11 @@ export class RegisterComponent implements OnInit {
       }
 
       return new Promise<boolean>((resolve) => {
-        console.log(this.singupForm.value);
+        // console.log(this.singupForm.value);
         this.userService.postUser(this.singupForm.value, blob).subscribe((r) => {
           console.log('Respuesta del servidor:', r);
           resolve(true);
-          this.singupForm.reset();
+          // this.router.navigateByUrl('/login');
         }, (error) => {
           console.log('Error al realizar la solicitud: ', error);
           resolve(false);
