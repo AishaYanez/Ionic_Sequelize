@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 // import { User } from 'src/app/model/user/user';
 import { StatusLoginService } from 'src/app/services/statusLogin/status-login.service';
 import { UserService } from 'src/app/services/user/user.service';
-// import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -51,10 +50,11 @@ export class LoginComponent implements OnInit {
     }
     return new Promise<boolean>((resolve) => {
       // console.log(this.singupForm.value);
-      this.userService.getUser(this.loginForm.value).subscribe((r) => {
+      this.userService.getUser(this.loginForm.value.email).subscribe((r) => {
         console.log('Respuesta del servidor:', r);
         resolve(true);
-        // this.router.navigateByUrl('/login');
+        this.statusService.login(this.loginForm.value.email, this.loginForm.value.password);
+        this.router.navigateByUrl('/change-password');
       }, (error) => {
         console.log('Error al realizar la solicitud: ', error);
         resolve(false);

@@ -40,21 +40,25 @@ export class StatusLoginService {
     localStorage.setItem('email', email);
     this.changeStatusLogin();
     this.router.navigate(['change-password']);
-    this.userService.getUser(email).subscribe((u: User) => {
-      if (u.password === password) {
+    this.userService.getUser(email).subscribe((r) => {
+      if (r.password === password) {
         localStorage.setItem('loggedIn', 'true');
         this.userLogin = {
-          id: u.id,
-          codeUser: u.codeUser,
-          nickName: u.nickName,
-          email: u.email,
-          password: u.password
+          id: r.id,
+          codeUser: r.codeUser,
+          nickName: r.nickName,
+          email: r.email,
+          password: r.password
         };
-        localStorage.setItem('emailUser',this.userLogin.email);
         // this.userService.setUserLogin(this.userLogin);
         this.changeStatusLogin();
         this.router.navigate(['/']);
       }
+      console.log('Respuesta del servidor:', r);
+      localStorage.setItem('loggedIn', 'true');
+      this.router.navigateByUrl('/change-password');
+    }, (error) => {
+      console.log('Error al realizar la solicitud: ', error);
     });
   }
 }

@@ -24,8 +24,8 @@ export class UserService {
     return this.httpClient.get(this.endPoint);
   }
 
-  getUser(user: any): Observable<User> {
-    let url = `${this.endPoint}/${user.email}`;
+  getUser(email: any): Observable<User> {
+    let url = `${this.endPoint}/${email}`;
     return this.httpClient.get<User>(url);
   }
 
