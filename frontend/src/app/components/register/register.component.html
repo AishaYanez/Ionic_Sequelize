@@ -9,8 +9,8 @@
 <ion-content>
   <form [formGroup]="singupForm" (ngSubmit)="register()" novalidate>
     <ion-item>
-      <ion-label aria-labelledby="nickNameRegister" position="floating">Nombre</ion-label>
-      <ion-input formControlName="nickName" type="text"></ion-input>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input aria-labelledby="nickNameRegister" formControlName="nickName" type="text"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl['nickName']?.errors?.['required']">NickName is required.</span>
     <ion-item>

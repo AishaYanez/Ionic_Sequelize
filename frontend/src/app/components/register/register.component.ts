@@ -43,25 +43,6 @@ export class RegisterComponent implements OnInit {
     return this.singupForm.controls;
   }
 
-  takePhoto() {
-    // DECOMMENT:
-    // this.photoService.takePhoto().then(data => {
-    //   this.capturedPhoto = data.webPath;
-    // });
-  }
-
-  pickImage() {
-    // DECOMMENT:
-    // this.photoService.pickImage().then(data => {
-    //   this.capturedPhoto = data.webPath;
-    // });
-  }
-
-  discardImage() {
-    // DECOMMENT:
-    // this.capturedPhoto = null;
-  }
-
   async register() {
     this.isSubmitted = true;
     if (!this.singupForm.valid) {

@@ -11,7 +11,16 @@ export class StatusLoginService {
 
   constructor(private userService: UserService, private router: Router) { }
 
-  userLogin!:User;
+  user: User = {
+    id:0,
+    codeUser: '',
+    nickName: '',
+    email:'',
+    password: ''
+  };
+
+  public userLogin = new BehaviorSubject<User>(this.user);
+  userLogin$: Observable<User> = this.userLogin.asObservable();
 
   public statusLogin = new BehaviorSubject<boolean>(false);
   atributoBooleano$: Observable<boolean> = this.statusLogin.asObservable();
@@ -43,14 +52,13 @@ export class StatusLoginService {
     this.userService.getUser(email).subscribe((r) => {
       if (r.password === password) {
         localStorage.setItem('loggedIn', 'true');
-        this.userLogin = {
+        this.userLogin.next({
           id: r.id,
           codeUser: r.codeUser,
           nickName: r.nickName,
           email: r.email,
           password: r.password
-        };
-        // this.userService.setUserLogin(this.userLogin);
+        });
         this.changeStatusLogin();
         this.router.navigate(['/']);
       }

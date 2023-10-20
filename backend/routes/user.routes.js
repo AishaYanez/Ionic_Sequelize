@@ -10,7 +10,7 @@ module.exports = app => {
 
   router.get("/:email", users.findOne);
 
-  router.put("/:id", users.update);
+  router.put("/:id", upload.single('file'), users.update);
 
   router.delete("/:id", users.delete);
 

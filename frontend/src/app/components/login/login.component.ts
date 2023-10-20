@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
         console.log('Respuesta del servidor:', r);
         resolve(true);
         this.statusService.login(this.loginForm.value.email, this.loginForm.value.password);
+        localStorage.setItem('loggedIn', 'true');
         this.router.navigateByUrl('/change-password');
       }, (error) => {
         console.log('Error al realizar la solicitud: ', error);
